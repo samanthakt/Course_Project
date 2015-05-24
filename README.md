@@ -5,11 +5,8 @@ Repository with information of course project from Getting and Cleaning data cou
 Here you have all the information to do the tidy data uploaded.
 
 ### 1) Creating a file where the data will be downloaded, download the data and unzip the data.
-if(!file.exists("Course_Project")) {
+if(!file.exists("Course_Project")) {dir.create("Course_Project")}
 
-    dir.create("Course_Project")
-    
-}
 fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 
 download.file(fileUrl, destfile="./Course_Project.zip")
@@ -26,6 +23,7 @@ features <- features[,2]
 
 activity_labels <- read.table("./UCI_HAR_Dataset/activity_labels.txt", header=FALSE, sep="", colClasses="character", na.strings="NA")
 
+
 After, read files for each directory inside the main directory, in which contain infomation from test and train values.
 After you read all files inside test directory, merged them in one dataset named "test". Use "feature" to give names for the columns.
 
@@ -39,7 +37,8 @@ test <- cbind(subject_test,y_test,x_test)
 
 colnames(test) <- c("subject", "activity", features)
 
-Do the same for the files in train directory, creating a dataset named "train"
+
+Do the same for the files in train directory, creating a data set named "train"
 
 x_train <- read.table("./UCI_HAR_Dataset/train/X_train.txt", header=FALSE, sep="", colClasses="numeric", na.strings="NA")
 
@@ -51,7 +50,8 @@ train <- cbind(subject_train,y_train,x_train)
 
 colnames(train) <- c("subject", "activity", features)
 
-Finally, merge datasets test and train in one big dataset named "data_set", using rbind (you have two datasets with the same columns, but different number of rows).
+
+Finally, merge data sets test and train in one big data set named "data_set", using rbind (you have two datasets with the same columns, but different number of rows).
 
 data_set <- rbind (test, train)
 
@@ -60,16 +60,21 @@ Select columns that contain information of mean and standard deviation for each 
 
 data_set2 <- data_set[, c(1,2,as.vector(grep("mean()|std()", names(data_set))))] 
 
+
 Using the selection above, some variables that contain "mean" in the name were selected. To exclude this unwelcome columns, extract them, using again grep.
 
 data_set2 <- data_set2[,-(as.vector(grep("meanFreq", names(data_set2))))]
 
+### 4) Uses descriptive activity names to name the activities in the data set.
+For this, use the mapvalues from the plyr package
 
-activity_labels
 Install.packages("plyr")
+
 library(plyr)
+
 data_set2$activity <- mapvalues(data_set2$activity, from=c("1","2","3","4","5","6"), to = c("walking", "walking_upstairs", "walking_downstairs", "sitting", "standing", "laying"))
 
+### 5) Appropriately labels the data set with descriptive variable names.
 colnames(data_set2) <- c("subject", "activity", "tBodyAccMeanX", "tBodyAccMeanY", "tBodyAccMeanZ", "tBodyAccStdX", "tBodyAccStdY", "tBodyAccStdZ", "tGravityAccMeanX", "tGravityAccMeanY",
            "tGravityAccMeanZ", "tGravityAccStdX", "tGravityAccStdY", "tGravityAccStdZ", "tBodyAccJerkMeanX",  "tBodyAccJerkMeanY", "tBodyAccJerkMeanZ",
            "tBodyAccJerkStdX", "tBodyAccJerkStdY", "tBodyAccJerkStdZ", "tBodyGyroMeanX", "tBodyGyroMeanY", "tBodyGyroMeanZ", "tBodyGyroStdX",
