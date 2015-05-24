@@ -24,7 +24,7 @@ features <- features[,2]
 activity_labels <- read.table("./UCI_HAR_Dataset/activity_labels.txt", header=FALSE, sep="", colClasses="character", na.strings="NA")
 
 * After, read files for each directory inside the main directory, in which contain infomation from test and train values.
-After you read all files inside test directory, merge them in one data set named "test". Use "feature" to give names for the columns.
+* After you read all files inside test directory, merge them in one data set named "test". Use "feature" to give names for the columns.
 
 x_test <- read.table("./UCI_HAR_Dataset/test/X_test.txt", header=FALSE, sep="", colClasses="numeric", na.strings="NA")
 
@@ -53,7 +53,7 @@ colnames(train) <- c("subject", "activity", features)
 data_set <- rbind (test, train)
 
 ### 3) Create a new dataset contaning only information of interested columns.
-Select columns that contain information of mean and standard deviation for each measurement. For this, use grep, and select columns by the name (containing "mean()" or "std()" in the name).
+* Select columns that contain information of mean and standard deviation for each measurement. For this, use grep, and select columns by the name (containing "mean()" or "std()" in the name).
 
 data_set2 <- data_set[, c(1,2,as.vector(grep("mean()|std()", names(data_set))))] 
 
@@ -62,7 +62,7 @@ data_set2 <- data_set[, c(1,2,as.vector(grep("mean()|std()", names(data_set))))]
 data_set2 <- data_set2[,-(as.vector(grep("meanFreq", names(data_set2))))]
 
 ### 4) Use descriptive activity names to name the activities in the data set.
-For this, use the mapvalues from the plyr package.
+* For this, use the mapvalues from the plyr package.
 
 Install.packages("plyr")
 
@@ -83,7 +83,7 @@ colnames(data_set2) <- c("subject", "activity", "tBodyAccMeanX", "tBodyAccMeanY"
            "fBodyBodyGyroMagMean", "fBodyBodyGyroMagStd", "fBodyBodyGyroJerkMagMean", "fBodyBodyGyroJerkMagStd")
 
 ### 6) Create a second, independent tidy data set with the average of each variable for each activity and each subject.
-For this, use group_by and summarise_each form dplyr packages.
+* For this, use group_by and summarise_each form dplyr packages.
 
 Install.packages("dplyr")
 
