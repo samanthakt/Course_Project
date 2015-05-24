@@ -4,14 +4,15 @@ Repository with information of course project from Getting and Cleaning data cou
 ## How to create a tidy data
 Here you have all the information to do the tidy data uploaded.
 
-
-if(!file.exists("Course_Project")) { ##
+### 1) Creating a file where the data will be downloaded, download the data and unzip data
+if(!file.exists("Course_Project")) {
   dir.create("Course_Project")
 }
 fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 download.file(fileUrl, destfile="./Course_Project.zip")
 unzip("Course_Project.zip")
 
+### 2) 
 features <- read.table("./UCI_HAR_Dataset/features.txt", header=FALSE, sep="", colClasses="character", na.strings="NA")
 features <- features[,2]
 activity_labels <- read.table("./UCI_HAR_Dataset/activity_labels.txt", header=FALSE, sep="", colClasses="character", na.strings="NA")
