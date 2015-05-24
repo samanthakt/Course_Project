@@ -6,7 +6,7 @@ Here you have all the information to do the tidy data uploaded.
 
 ### 1) Creating a file where the data will be downloaded, download the data and unzip data
 if(!file.exists("Course_Project")) {
-  dir.create("Course_Project")
+    dir.create("Course_Project")
 }
 fileUrl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 download.file(fileUrl, destfile="./Course_Project.zip")
